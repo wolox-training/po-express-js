@@ -4,9 +4,9 @@ const { createUser } = require('../services/user');
 
 exports.userRegistration = async (req, res, next) => {
   try {
-    const { password: currentPass, ...body } = req.body;
-    const password = await encrypt(currentPass);
-    const user = await createUser({ password, ...body });
+    const body = req.body;
+    const hashedPassword = await encrypt(body.password);
+    const user = await createUser({ ...body, password: hashedPassword });
     logger.info(`User ${user.name} created`);
     res.status(201).send(user);
   } catch (error) {

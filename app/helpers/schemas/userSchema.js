@@ -12,7 +12,7 @@ module.exports.userSchema = {
     email: {
       type: 'string',
       format: 'email',
-      pattern: '@wolox.'
+      pattern: '@wolox.(com|co|cl|ar)$'
     },
     password: {
       type: 'string',

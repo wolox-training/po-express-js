@@ -1,10 +1,7 @@
 const bcrypt = require('bcryptjs');
 
-const saltRounds = 10;
+const SALT_ROUNDS = 10;
 module.exports.encrypt = value =>
   bcrypt
-    .hash(value, saltRounds)
-    .then(value)
-    .catch(error => {
-      throw Error(error);
-    });
+    .hash(value, SALT_ROUNDS)
+    .then(value);

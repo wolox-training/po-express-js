@@ -8,8 +8,8 @@ exports.createUser = async user => {
       dataValues: { password, ...userInfo }
     } = await User.create(user);
     return userInfo;
-  } catch ({ message }) {
-    logger.error(message);
-    throw databaseError(message);
+  } catch (error) {
+    logger.error(error.message);
+    throw databaseError(error.message);
   }
 };
