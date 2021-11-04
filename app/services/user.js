@@ -1,4 +1,4 @@
-const { databaseError } = require('../errors');
+const { schemaError } = require('../errors');
 const { User } = require('../models');
 const logger = require('../logger');
 
@@ -10,6 +10,6 @@ exports.createUser = async user => {
     return userInfo;
   } catch (error) {
     logger.error(error.message);
-    throw databaseError(error.message);
+    throw schemaError(error.message);
   }
 };

@@ -9,5 +9,5 @@ module.exports.validateSchema = schema => (req, res, next) => {
   const validate = ajv.compile(schema);
   if (validate(req.body)) return next();
 
-  next(schemaError(validate.errors));
+  next(schemaError(validate.errors[0].message));
 }
