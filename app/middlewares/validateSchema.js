@@ -1,5 +1,7 @@
-const Ajv = require("ajv");
-const ajv = new Ajv();
+const Ajv = require('ajv');
+const addFormats = require('ajv-formats')
+const ajv = new Ajv()
+addFormats(ajv);
 
 module.exports.validateSchema = (schema) => {
   return (req, res, next) => {
