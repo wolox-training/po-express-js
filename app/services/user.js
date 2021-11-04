@@ -4,7 +4,9 @@ const logger = require('../logger');
 
 exports.createUser = async user => {
   try {
-    const { dataValues: { password, ...userInfo } } = await User.create(user);
+    const {
+      dataValues: { password, ...userInfo }
+    } = await User.create(user);
     return userInfo;
   } catch ({ message }) {
     logger.error(message);

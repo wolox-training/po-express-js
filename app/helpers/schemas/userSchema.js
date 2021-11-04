@@ -18,8 +18,8 @@ module.exports.userSchema = {
       type: 'string',
       minLength: 8,
       pattern: '^[a-zA-Z0-9]*$'
-    },
+    }
   },
   required: ['name', 'lastName', 'email', 'password'],
   additionalProperties: false
-}
+};
