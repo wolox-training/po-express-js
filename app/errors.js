@@ -11,3 +11,6 @@ exports.defaultError = message => internalError(message, exports.DEFAULT_ERROR);
 
 exports.SCHEMA_ERROR = 'schema_error';
 exports.schemaError = message => internalError(message, exports.SCHEMA_ERROR);
+
+exports.EMAIL_ERROR = 'email_duplicate_error';
+exports.emailError = message => internalError(message, exports.EMAIL_ERROR);
