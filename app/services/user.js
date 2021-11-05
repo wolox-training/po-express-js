@@ -1,7 +1,8 @@
 const { emailError, databaseError } = require('../errors');
 const { User } = require('../models');
 const logger = require('../logger');
-const errorDuplicate = '_bt_check_unique';
+const { DUPLICATED_ERROR } = require('../constants/errors');
+
 exports.createUser = async user => {
   try {
     const {
@@ -11,7 +12,7 @@ exports.createUser = async user => {
   } catch (error) {
     logger.error(error.message);
     const { parent } = error;
-    if (parent && parent.routine === errorDuplicate) {
+    if (parent && parent.routine === DUPLICATED_ERROR) {
       throw emailError(error.message);
     }
     throw databaseError(error);
