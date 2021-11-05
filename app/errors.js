@@ -14,3 +14,9 @@ exports.schemaError = message => internalError(message, exports.SCHEMA_ERROR);
 
 exports.DUPLICATED_VALUE_ERROR = 'email_duplicate_error';
 exports.emailError = message => internalError(message, exports.DUPLICATED_VALUE_ERROR);
+
+exports.NOT_FOUND_ERROR = 'not_found_error';
+exports.notFoundError = message => internalError(message, exports.NOT_FOUND_ERROR);
+
+exports.AUTHENTICATION_ERROR = 'authentication_error';
+exports.authenticationError = message => internalError(message, exports.AUTHENTICATION_ERROR);
