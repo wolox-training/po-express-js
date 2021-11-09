@@ -28,3 +28,19 @@ exports.findUserBy = async params => {
     throw databaseError(error);
   }
 };
+
+exports.getAllUsers = async params => {
+  try {
+    const { rows: users, count } = await User
+      .findAndCountAll({
+        ...params,
+        attributes: { exclude: ['password'] }
+      });
+
+    return { users, count };
+
+  } catch (error) {
+    logger.error(error.message);
+    throw databaseError(error);
+  }
+};
