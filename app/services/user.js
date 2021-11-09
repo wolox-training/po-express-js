@@ -2,6 +2,7 @@ const { emailError, databaseError } = require('../errors');
 const { User } = require('../models');
 const logger = require('../logger');
 const { DUPLICATED_ERROR } = require('../constants/errors');
+const { PASSWORD_PARAM } = require('../constants/params');
 
 exports.createUser = async user => {
   try {
@@ -34,7 +35,7 @@ exports.getAllUsers = async params => {
     const { rows: users, count } = await User
       .findAndCountAll({
         ...params,
-        attributes: { exclude: ['password'] }
+        attributes: { exclude: [PASSWORD_PARAM] }
       });
 
     return { users, count };

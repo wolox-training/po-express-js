@@ -2,16 +2,16 @@ const request = require('supertest');
 const app = require('../app');
 const { TOKEN_ERROR } = require('../app/constants/errors');
 const { SCHEMA_ERROR } = require('../app/errors');
-const { factoryManyUser, factoryUser } = require('./factory/user');
+const { createManyUser, createUser } = require('./factory/user');
 const { credentialsMock } = require('./mocks/user');
 
-const getAllUsers = (token = '', limit = 10, page = 0) =>
+const getAllUsers = (token = '', limit = 10, page = 1) =>
   request(app)
     .get(`/users?limit=${limit}&page=${page}`)
     .set('Authorization', token);
 
 const signIn = async () => {
-  await factoryUser({ email: credentialsMock.email });
+  await createUser({ email: credentialsMock.email });
   return request(app).post('/users/sessions').send(credentialsMock);
 }
 
@@ -37,15 +37,15 @@ describe('GET /users', () => {
   });
 
   test('It should return 10 users and total 26', async () => {
-    await factoryManyUser(25);
+    await createManyUser(25);
     const { body } = await getAllUsers(authToken, 8);
     expect(body.users.length).toBe(8);
     expect(body.count).toBe(26);
   });
 
-  test('It should return two users when limit = 4 and page = 1', async () => {
-    await factoryManyUser(4);
-    const { body } = await getAllUsers(authToken, 4, 1);
+  test('It should return two users when limit = 4 and page = 2', async () => {
+    await createManyUser(4);
+    const { body } = await getAllUsers(authToken, 4, 2);
     expect(body.users.length).toBe(1);
     expect(body.count).toBe(5);
   });

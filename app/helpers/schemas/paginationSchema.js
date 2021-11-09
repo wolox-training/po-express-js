@@ -9,7 +9,7 @@ module.exports.paginationSchema = {
     page: {
       type:'string',
       pattern: '^[0-9]*$',
-      default: '0'
+      default: '1'
     }
   },
   additionalProperties: false

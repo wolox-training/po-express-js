@@ -1,8 +1,8 @@
 const { authenticationError } = require('../errors');
-const { encrypt, comparePass } = require('../helpers/encrypt');
+const { encrypt, compareHash } = require('../helpers/encrypt');
 const { createUser, findUserBy, getAllUsers } = require('../services/user');
 const logger = require('../logger');
-const { getToken } = require('../helpers/jwt');
+const { createToken } = require('../helpers/jwt');
 const { CREDENTIALS_ERROR } = require('../constants/errors');
 
 exports.signUp = async (req, res, next) => {
@@ -24,10 +24,10 @@ exports.signIn = async (req, res, next) => {
     const dbUser = await findUserBy({ email });
     if (!dbUser) throw authenticationError(CREDENTIALS_ERROR);
 
-    const result = await comparePass(password, dbUser.password);
+    const result = await compareHash(password, dbUser.password);
     if (!result) throw authenticationError(CREDENTIALS_ERROR);
 
-    const token = getToken({ email });
+    const token = createToken({ email });
     logger.info(`${dbUser.email} authenticated`);
     res.status(200).send({ token });
   } catch (error) {
@@ -39,7 +39,7 @@ exports.signIn = async (req, res, next) => {
 exports.getUsers = async (req, res, next) => {
   try {
     const { limit, page } = req.query;
-    const offset = page * limit;
+    const offset = (page - 1) * limit;
     const users = await getAllUsers({ limit, offset });
     res.status(200).send(users);
   } catch (error) {
