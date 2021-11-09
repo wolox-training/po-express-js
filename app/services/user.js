@@ -19,9 +19,9 @@ exports.createUser = async user => {
   }
 };
 
-exports.findUserBy = async (value,attribute = 'email') => {
+exports.findUserBy = async params => {
   try {
-    const userInfo = await User.findOne({ where: { [attribute]: value } });
+    const userInfo = await User.findOne({ where: params });
     return userInfo;
   } catch (error) {
     logger.error(error.message);
