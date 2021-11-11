@@ -18,3 +18,13 @@ exports.createUser = async user => {
     throw databaseError(error);
   }
 };
+
+exports.findUserBy = async params => {
+  try {
+    const userInfo = await User.findOne({ where: params });
+    return userInfo;
+  } catch (error) {
+    logger.error(error.message);
+    throw databaseError(error);
+  }
+};

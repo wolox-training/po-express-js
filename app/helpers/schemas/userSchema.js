@@ -1,3 +1,21 @@
+module.exports.credentialsSchema = {
+  type: 'object',
+  properties: {
+    email: {
+      type: 'string',
+      format: 'email',
+      pattern: '@wolox.(com|co|cl|ar)$'
+    },
+    password: {
+      type: 'string',
+      minLength: 8,
+      pattern: '^[a-zA-Z0-9]*$'
+    }
+  },
+  required: ['email', 'password'],
+  additionalProperties: false
+}
+
 module.exports.userSchema = {
   type: 'object',
   properties: {
@@ -9,16 +27,7 @@ module.exports.userSchema = {
       type: 'string',
       minLength: 1
     },
-    email: {
-      type: 'string',
-      format: 'email',
-      pattern: '@wolox.(com|co|cl|ar)$'
-    },
-    password: {
-      type: 'string',
-      minLength: 8,
-      pattern: '^[a-zA-Z0-9]*$'
-    }
+    ...this.credentialsSchema.properties
   },
   required: ['name', 'lastName', 'email', 'password'],
   additionalProperties: false
