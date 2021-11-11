@@ -24,6 +24,11 @@ module.exports = {
       password: {
         allowNull: false,
         type: Sequelize.STRING
+      },
+      role: {
+        allowNull: false,
+        type: Sequelize.ENUM('ADMIN', 'REGULAR'),
+        defaultValue: 'REGULAR'
       }
     }),
   down: queryInterface => queryInterface.dropTable('users')

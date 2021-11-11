@@ -30,6 +30,16 @@ exports.findUserBy = async params => {
   }
 };
 
+exports.updateUserBy = async (attributes, params) => {
+  try {
+    const userInfo = await User.update(attributes, { where: params });
+    return userInfo;
+  } catch (error) {
+    logger.error(error.message);
+    throw databaseError(error);
+  }
+};
+
 exports.getAllUsers = async params => {
   try {
     const { rows: users, count } = await User
@@ -37,9 +47,7 @@ exports.getAllUsers = async params => {
         ...params,
         attributes: { exclude: [PASSWORD_PARAM] }
       });
-
     return { users, count };
-
   } catch (error) {
     logger.error(error.message);
     throw databaseError(error);

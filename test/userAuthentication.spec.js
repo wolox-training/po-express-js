@@ -24,7 +24,7 @@ describe('POST /users/sessions', () => {
 
   test('It should return a error when user is registered but with invalid pass', async () => {
     await createUser({ email: credentialsMock.email });
-    const invalidCredencials = { ...credentialsMock, password: 'invalid12345' }
+    const invalidCredencials = { ...credentialsMock, password: 'invalid12345' };
     const response = await request(app)
       .post('/users/sessions')
       .send(invalidCredencials);

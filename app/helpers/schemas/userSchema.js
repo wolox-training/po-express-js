@@ -14,7 +14,7 @@ module.exports.credentialsSchema = {
   },
   required: ['email', 'password'],
   additionalProperties: false
-}
+};
 
 module.exports.userSchema = {
   type: 'object',

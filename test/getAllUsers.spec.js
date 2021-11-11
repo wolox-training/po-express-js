@@ -1,25 +1,14 @@
-const request = require('supertest');
-const app = require('../app');
 const { TOKEN_ERROR } = require('../app/constants/errors');
 const { SCHEMA_ERROR } = require('../app/errors');
-const { createManyUser, createUser } = require('./factory/user');
+const { createManyUser } = require('./factory/user');
+const { getAllUsers, createUserSession } = require('./utils/user');
 const { credentialsMock } = require('./mocks/user');
 
-const getAllUsers = (token = '', limit = 10, page = 1) =>
-  request(app)
-    .get(`/users?limit=${limit}&page=${page}`)
-    .set('Authorization', token);
-
-const signIn = async () => {
-  await createUser({ email: credentialsMock.email });
-  return request(app).post('/users/sessions').send(credentialsMock);
-}
-
 describe('GET /users', () => {
-
-  let authToken;
+  let authToken = null;
   beforeEach(async () => {
-    const { body: { token } } = await signIn();
+    const { email } = credentialsMock;
+    const { body: { token } } = await createUserSession({ email });
     authToken = token;
   });
 

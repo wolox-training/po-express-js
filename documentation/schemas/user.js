@@ -13,7 +13,7 @@ module.exports = {
   },
   password: {
     type: 'string',
-    example: 'myPassword12345',
+    example: 'myPassword12345'
   },
   User: {
     type: 'object',

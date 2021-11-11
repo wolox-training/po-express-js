@@ -42,7 +42,7 @@ describe('POST /users', () => {
   });
 
   test('It should respond error when domain email is invalid', async () => {
-    const userInvalid = { ...userMock, email: 'invalid@invalid.in', };
+    const userInvalid = { ...userMock, email: 'invalid@invalid.in' };
     const response = await request(app)
       .post('/users')
       .send(userInvalid);
