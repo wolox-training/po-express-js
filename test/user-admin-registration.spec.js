@@ -4,6 +4,7 @@ const { credentialsMock, userMock } = require('./mocks/user');
 const { AUTHENTICATION_ERROR } = require('../app/errors');
 const { createUserSession } = require('./utils/user');
 const { ROLES } = require('../app/constants/params');
+const { createUser } = require('./factory/user');
 
 describe('POST /admin/users', () => {
 
@@ -15,6 +16,17 @@ describe('POST /admin/users', () => {
       .send(userMock);
     expect(resp.body.internal_code).toBe(AUTHENTICATION_ERROR);
     expect(resp.statusCode).toBe(401);
+  });
+
+  test('It should update the role  when user is registered ', async () => {
+    const { body: { token } } = await createUserSession({ role: ROLES.ADMIN });
+    await createUser(userMock);
+    const resp = await request(app)
+      .post('/admin/users')
+      .set('Authorization', token)
+      .send(userMock);
+    expect(resp.body).toBeDefined();
+    expect(resp.statusCode).toBe(200);
   });
 
   test('It should create the user and respond 201 ', async () => {
