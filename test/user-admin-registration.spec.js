@@ -3,6 +3,7 @@ const app = require('../app');
 const { credentialsMock, userMock } = require('./mocks/user');
 const { AUTHENTICATION_ERROR } = require('../app/errors');
 const { createUserSession } = require('./utils/user');
+const { ROLES } = require('../app/constants/params');
 
 describe('POST /admin/users', () => {
 
@@ -16,18 +17,8 @@ describe('POST /admin/users', () => {
     expect(resp.statusCode).toBe(401);
   });
 
-  test('It should update the role  when user is registered ', async () => {
-    const { body: { token } } = await createUserSession({ email: credentialsMock.email, role: 'ADMIN' });
-    const resp = await request(app)
-      .post('/admin/users')
-      .set('Authorization', token)
-      .send(userMock);
-    expect(resp.body).toBeDefined();
-    expect(resp.statusCode).toBe(200);
-  });
-
   test('It should create the user and respond 201 ', async () => {
-    const { body: { token } } = await createUserSession({ email: credentialsMock.email, role: 'ADMIN' });
+    const { body: { token } } = await createUserSession({ email: credentialsMock.email, role: ROLES.ADMIN });
     const resp = await request(app)
       .post('/admin/users')
       .set('Authorization', token)

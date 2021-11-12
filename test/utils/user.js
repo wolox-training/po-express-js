@@ -8,8 +8,7 @@ exports.createUserSession = async user => {
   const credentials = { password: credentialsMock.password, email }
   return request(app).post('/users/sessions').send(credentials);
 };
-exports.getAllUsers = (token = '', limit = 10, page = 1) => {
-  return request(app)
+exports.getAllUsers = (token = '', limit = 10, page = 1) =>
+  request(app)
     .get(`/users?limit=${limit}&page=${page}`)
     .set('Authorization', token);
-};
