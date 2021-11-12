@@ -66,7 +66,7 @@ const intValidation = (model, key) => {
 const emailFactory = (model, key) => {
   if (model.rawAttributes[key].validate.isEmail) {
     if (model.rawAttributes[key].unique) {
-      return factory.sequence(`${model.name}.email`, n => `dummy-user-${n}@wolox.com.ar`);
+      return factory.sequence(`${model.name}.email`, n => `dummy-user-${n}@wolox.ar`);
     }
     return factory.chance('email', { domain: 'wolox.com.ar' });
   }

@@ -24,13 +24,18 @@ module.exports = (sequelize, DataTypes) => {
         unique: true,
         validate: {
           isEmail: {
-            msg: 'Must be a valid email',
+            msg: 'Must be a valid email'
           }
         }
       },
       password: {
         allowNull: false,
         type: DataTypes.STRING
+      },
+      role: {
+        allowNull: false,
+        type: DataTypes.ENUM('ADMIN', 'REGULAR'),
+        defaultValue: 'REGULAR'
       }
     },
     {

@@ -10,4 +10,4 @@ module.exports.validateSchema = (schema, type = BODY_PARAM) => (req, res, next) 
   const validate = ajv.compile(schema);
   if (validate(req[type])) return next();
   next(schemaError(validate.errors[0].message));
-}
+};
