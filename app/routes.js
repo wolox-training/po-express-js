@@ -6,7 +6,7 @@ const { paginationSchema } = require('./helpers/schemas/pagination-schema');
 const { validateSession } = require('./middlewares/validate-session');
 const { QUERY_PARAM, ROLES } = require('./constants/params');
 const { validateInRole } = require('./middlewares/validate-role');
-const { createWeet } = require('./controllers/weet');
+const { createWeet, getWeets } = require('./controllers/weet');
 
 exports.init = app => {
   app.get('/health', healthCheck);
@@ -15,4 +15,5 @@ exports.init = app => {
   app.post('/users', [validateSchema(userSchema)], signUp);
   app.post('/users/sessions', [validateSchema(credentialsSchema)], signIn);
   app.post('/weets', [validateSession], createWeet);
+  app.get('/weets', [validateSession, validateSchema(paginationSchema, QUERY_PARAM)], getWeets);
 };
