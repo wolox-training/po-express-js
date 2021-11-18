@@ -1,12 +1,25 @@
 const axios = require('axios');
 const { url } = require('../../config').common.weetService;
-const { defaultError } = require('../errors');
-
-exports.getWeet = async () => {
+const { defaultError, databaseError } = require('../errors');
+const { Weet } = require('../models');
+const logger = require('../logger');
+const { WEET_API_ERROR } = require('../constants/errors');
+exports.getWeetContent = async () => {
   try {
-    const { data } = await axios.get(`${url}?format=json`);
-    return data;
+    const { data: { joke } } = await axios.get(`${url}?format=json`);
+    return joke;
   } catch (error) {
-    return defaultError(error);
+    logger.error(error);
+    throw defaultError(WEET_API_ERROR);
+  }
+};
+
+exports.createWeet = async weet => {
+  try {
+    const weetInfo = await Weet.create(weet);
+    return weetInfo;
+  } catch (error) {
+    logger.error(error);
+    throw databaseError(error);
   }
 };
