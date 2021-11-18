@@ -11,8 +11,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       userId: {
         allowNull: false,
-        type: DataTypes.INTEGER,
-        field: 'user_id',
+        type: DataTypes.INTEGER
       },
       content: {
         allowNull: false,
@@ -21,15 +20,14 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       timestamps: false,
-      tableName: 'weets'
+      tableName: 'weets',
+      underscored: true
     }
   );
   Weet.associate = models => {
     Weet.belongsTo(models.User, {
-      foreignKey: {
-        name: 'user_id',
-        allowNull: false
-      }
+      as: 'user',
+      foreignKey: 'userId'
     });
   };
   return Weet;
