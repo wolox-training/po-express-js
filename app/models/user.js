@@ -1,5 +1,7 @@
 'use strict';
 
+const { USER_POSITIONS } = require("../constants/params");
+
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define(
     'User',
@@ -36,6 +38,16 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         type: DataTypes.ENUM('ADMIN', 'REGULAR'),
         defaultValue: 'REGULAR'
+      },
+      position: {
+        allowNull: false,
+        type: DataTypes.ENUM,
+        values: USER_POSITIONS,
+        defaultValue: USER_POSITIONS[0]
+      },
+      score: {
+        type: DataTypes.INTEGER, 
+        defaultValue: 0
       }
     },
     {
