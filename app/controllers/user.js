@@ -47,8 +47,8 @@ exports.signIn = async (req, res, next) => {
 
     const result = await compareHash(password, dbUser.password);
     if (!result) throw authenticationError(CREDENTIALS_ERROR);
-
-    const token = createToken({ email, role: dbUser.role });
+    const { id, role } = dbUser;
+    const token = createToken({ email, role, id });
     logger.info(`${dbUser.email} authenticated`);
     res.status(200).send({ token });
   } catch (error) {

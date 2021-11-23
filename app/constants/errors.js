@@ -3,3 +3,4 @@ exports.CREDENTIALS_ERROR = 'Invalid credentials';
 exports.USER_NOT_FOUND = 'User not found';
 exports.TOKEN_ERROR = 'Authorization token is required';
 exports.UNAUTHORIZED = 'Invalid authentication credentials for the requested resource';
+exports.WEET_API_ERROR = 'Error generating weet content';
