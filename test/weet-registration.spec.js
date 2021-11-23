@@ -18,14 +18,14 @@ describe('POST /weets', () => {
     expect(resp.statusCode).toBe(201);
   });
 
-  test('It should return an error witn status 500', async () => {
+  test('It should return an error witn status 503', async () => {
     axios.get.mockImplementation(() => Promise.reject());
     const { body: { token } } = await createUserSession();
     const resp = await request(app)
       .post('/weets')
       .set('Authorization', token);
     expect(resp.body.message).toBe(WEET_API_ERROR);
-    expect(resp.statusCode).toBe(500);
+    expect(resp.statusCode).toBe(503);
   });
 
   test('It should responde an error when token is invalid', async () => {

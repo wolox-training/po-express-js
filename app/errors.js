@@ -20,3 +20,6 @@ exports.notFoundError = message => internalError(message, exports.NOT_FOUND_ERRO
 
 exports.AUTHENTICATION_ERROR = 'authentication_error';
 exports.authenticationError = message => internalError(message, exports.AUTHENTICATION_ERROR);
+
+exports.SERVICE_UNAVAILABLE = 'service_unavailable';
+exports.serviceUnavailable = message => internalError(message, exports.SERVICE_UNAVAILABLE);

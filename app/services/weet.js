@@ -1,6 +1,6 @@
 const axios = require('axios');
 const { url } = require('../../config').common.weetService;
-const { defaultError, databaseError } = require('../errors');
+const { databaseError, serviceUnavailable } = require('../errors');
 const { Weet } = require('../models');
 const logger = require('../logger');
 const { WEET_API_ERROR } = require('../constants/errors');
@@ -13,7 +13,7 @@ exports.getWeetContent = async () => {
     return joke;
   } catch (error) {
     logger.error(error);
-    throw defaultError(WEET_API_ERROR);
+    throw serviceUnavailable(WEET_API_ERROR);
   }
 };
 
