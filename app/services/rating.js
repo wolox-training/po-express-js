@@ -4,7 +4,6 @@ const { databaseError } = require('../errors');
 const { calculateUserScore } = require('../helpers/calculate-user-score');
 
 exports.createRating = async (rating, user) => {
-
   const transaction = await sequelize.transaction();
   try {
     const { score } = rating;
@@ -22,10 +21,8 @@ exports.createRating = async (rating, user) => {
 };
 
 exports.updateRating = async (score, rating, user) => {
-
   const transaction = await sequelize.transaction();
   try {
-
     const { score: currentScore } = rating;
     const { score: currentUserScore } = user;
     const newRatingScore = currentScore === score ? 0 : score;

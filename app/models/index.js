@@ -7,11 +7,11 @@ const dbConfig = require('../../config/db')[config.environment];
 const basename = path.basename(__filename);
 const db = {};
 
-// dbConfig.dialectOptions =  {
-//   ssl: {
-//       rejectUnauthorized: false
-//   }
-// }
+dbConfig.dialectOptions =  {
+  ssl: {
+      rejectUnauthorized: false
+  }
+}
 const sequelize = new Sequelize(dbConfig.database, dbConfig.username, dbConfig.password, dbConfig);
 
 fs.readdirSync(__dirname)
