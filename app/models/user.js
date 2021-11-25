@@ -43,8 +43,8 @@ module.exports = (sequelize, DataTypes) => {
       position: {
         allowNull: false,
         type: DataTypes.ENUM,
-        values: USER_POSITIONS,
-        defaultValue: USER_POSITIONS[0]
+        values: Object.values(USER_POSITIONS),
+        defaultValue: USER_POSITIONS.DEVELOPER
       },
       score: {
         type: DataTypes.INTEGER,
