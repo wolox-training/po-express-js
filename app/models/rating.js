@@ -1,8 +1,8 @@
 'use strict';
 
 module.exports = (sequelize, DataTypes) => {
-  const Weet = sequelize.define(
-    'Weet',
+  const Rating = sequelize.define(
+    'Rating',
     {
       id: {
         autoIncrement: true,
@@ -13,26 +13,30 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         type: DataTypes.INTEGER
       },
-      content: {
+      weetId: {
         allowNull: false,
-        type: DataTypes.STRING
+        type: DataTypes.INTEGER
+      },
+      score: {
+        allowNull: false,
+        type: DataTypes.INTEGER
       }
     },
     {
       timestamps: false,
-      tableName: 'weets',
+      tableName: 'ratings',
       underscored: true
     }
   );
-  Weet.associate = models => {
-    Weet.belongsTo(models.User, {
+  Rating.associate = models => {
+    Rating.belongsTo(models.User, {
       as: 'user',
       foreignKey: 'userId'
     });
-    Weet.hasMany(models.Rating, {
-      foreignKey: 'userId',
-      as: 'rating'
+    Rating.belongsTo(models.Weet, {
+      as: 'weet',
+      foreignKey: 'weetId'
     });
   };
-  return Weet;
+  return Rating;
 };

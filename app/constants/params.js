@@ -6,3 +6,11 @@ exports.ROLES = {
   ADMIN: 'ADMIN',
   REGULAR: 'REGULAR'
 };
+exports.USER_POSITIONS = {
+  DEVELOPER: 'DEVELOPER',
+  LEAD: 'LEAD',
+  TL: 'TL',
+  EM: 'EM',
+  HEAD: 'HEAD',
+  CEO: 'CEO'
+}

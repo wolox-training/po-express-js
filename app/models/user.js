@@ -1,5 +1,8 @@
 'use strict';
 
+const { USER_POSITIONS } = require('../constants/params');
+const { getPositionByScore } = require('../helpers/get-user-position');
+
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define(
     'User',
@@ -36,6 +39,16 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         type: DataTypes.ENUM('ADMIN', 'REGULAR'),
         defaultValue: 'REGULAR'
+      },
+      position: {
+        allowNull: false,
+        type: DataTypes.ENUM,
+        values: Object.values(USER_POSITIONS),
+        defaultValue: USER_POSITIONS.DEVELOPER
+      },
+      score: {
+        type: DataTypes.INTEGER,
+        defaultValue: 0
       }
     },
     {
@@ -43,6 +56,11 @@ module.exports = (sequelize, DataTypes) => {
       tableName: 'users'
     }
   );
+
+  User.beforeUpdate(user => {
+   user.position = getPositionByScore(user.score)
+  });
+
   User.associate = models => {
     User.hasMany(models.Weet, {
       foreignKey: 'userId',
