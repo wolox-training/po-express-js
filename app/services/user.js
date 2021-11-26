@@ -32,7 +32,7 @@ exports.findUserBy = async params => {
 
 exports.updateUserBy = async (attributes, params) => {
   try {
-    const userInfo = await User.update(attributes, { where: params,  individualHooks: true});
+    const userInfo = await User.update(attributes, { where: params, individualHooks: true });
     return userInfo;
   } catch (error) {
     logger.error(error.message);
