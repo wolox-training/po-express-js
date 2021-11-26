@@ -6,6 +6,7 @@ const dbConfig = require('../../config/db')[config.environment];
 
 const basename = path.basename(__filename);
 const db = {};
+
 dbConfig.dialectOptions =  {
   ssl: {
       rejectUnauthorized: false

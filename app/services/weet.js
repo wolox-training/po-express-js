@@ -47,3 +47,22 @@ exports.getAllWeets = async params => {
     throw databaseError(error);
   }
 };
+
+exports.findWeetBy = async params => {
+  try {
+    const weetInfo = await Weet.findOne({
+      where: params,
+      include: [
+        {
+          model: User,
+          as: 'user',
+          attributes: { exclude: [PASSWORD_PARAM] }
+        }
+      ]
+    });
+    return weetInfo;
+  } catch (error) {
+    logger.error(error.message);
+    throw databaseError(error);
+  }
+};
