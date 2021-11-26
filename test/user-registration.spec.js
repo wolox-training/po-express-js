@@ -9,7 +9,7 @@ const sendMailMock = jest.fn();
 nodemailer.createTransport.mockReturnValue({ 'sendMail': sendMailMock });
 
 describe('POST /users', () => {
-  test('It should respond user name with status 201 and send email', async () => {
+  test('It should respond user name with status 201', async () => {
     const response = await request(app)
       .post('/users')
       .send(userMock);
