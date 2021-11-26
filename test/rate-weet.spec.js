@@ -59,7 +59,7 @@ describe('POST /weets/:id/ratings', () => {
     const user = await findUserBy({ id: userId })
 
     expect(user.score).toBe(2);
-    expect(user.position).toBe(USER_POSITIONS[0]);
+    expect(user.position).toBe(USER_POSITIONS.DEVELOPER);
     expect(resp.statusCode).toBe(201);
   });
 
@@ -76,7 +76,7 @@ describe('POST /weets/:id/ratings', () => {
     const user = await findUserBy({ id: userId });
 
     expect(user.score).toBe(5);
-    expect(user.position).toBe(USER_POSITIONS[1]);
+    expect(user.position).toBe(USER_POSITIONS.LEAD);
     expect(resp.statusCode).toBe(201);
   });
 
@@ -96,7 +96,7 @@ describe('POST /weets/:id/ratings', () => {
     const user = await findUserBy({ id: userId })
 
     expect(user.score).toBe(4);
-    expect(user.position).toBe(USER_POSITIONS[0]);
+    expect(user.position).toBe(USER_POSITIONS.DEVELOPER);
     expect(resp.statusCode).toBe(201);
     expect(resp2.statusCode).toBe(200);
   });
@@ -118,7 +118,7 @@ describe('POST /weets/:id/ratings', () => {
     const user = await findUserBy({ id: userId });
 
     expect(user.score).toBe(5);
-    expect(user.position).toBe(USER_POSITIONS[1]);
+    expect(user.position).toBe(USER_POSITIONS.LEAD);
     expect(resp.statusCode).toBe(200);
   });
 });
