@@ -47,6 +47,11 @@ const config = {
     },
     weetService: {
       url: process.env.WEET_API_URL
+    },
+    mailer: {
+      email: process.env.EMAIL,
+      pass: process.env.EMAIL_PASS,
+      service: process.env.EMAIL_SERVICE,
     }
   }
 };

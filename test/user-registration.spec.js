@@ -2,6 +2,11 @@ const request = require('supertest');
 const { SCHEMA_ERROR, DUPLICATED_VALUE_ERROR } = require('../app/errors');
 const app = require('../app');
 const { userMock } = require('./mocks/user');
+const nodemailer = require('nodemailer');
+
+jest.mock('nodemailer');
+const sendMailMock = jest.fn();
+nodemailer.createTransport.mockReturnValue({ 'sendMail': sendMailMock });
 
 describe('POST /users', () => {
   test('It should respond user name with status 201', async () => {
@@ -48,5 +53,13 @@ describe('POST /users', () => {
       .send(userInvalid);
     expect(response.body.internal_code).toBe(SCHEMA_ERROR);
     expect(response.statusCode).toBe(422);
+  });
+  
+  test('It should send an email when a user is registered', async () => {
+    const response = await request(app)
+      .post('/users')
+      .send(userMock);
+    expect(response.statusCode).toBe(201);
+    expect(sendMailMock).toHaveBeenCalled();
   });
 });
