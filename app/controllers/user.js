@@ -3,7 +3,7 @@ const { encrypt, compareHash } = require('../helpers/encrypt');
 const { createUser, findUserBy, getAllUsers, updateUserBy } = require('../services/user');
 const logger = require('../logger');
 const { createToken } = require('../helpers/jwt');
-const { CREDENTIALS_ERROR } = require('../constants/errors');
+const { CREDENTIALS_ERROR, TOKEN_ERROR } = require('../constants/errors');
 const { ROLES, MAILER_OPTIONS } = require('../constants/params');
 const { sendMail } = require('../helpers/mailer');
 
@@ -51,9 +51,25 @@ exports.signIn = async (req, res, next) => {
     const result = await compareHash(password, dbUser.password);
     if (!result) throw authenticationError(CREDENTIALS_ERROR);
     const { id, role } = dbUser;
-    const token = createToken({ email, role, id });
+    const createdAt = Date.now();
+    const token = createToken({ email, role, id, createdAt });
     logger.info(`${dbUser.email} authenticated`);
     res.status(200).send({ token });
+  } catch (error) {
+    logger.error(error);
+    next(error);
+  }
+};
+
+exports.logout = async (req, res, next) => {
+  try {
+    const { id } = res.locals.user;
+    const dbUser = await findUserBy(id);
+    if (!dbUser) throw authenticationError(TOKEN_ERROR);
+    const sessionExpires = Date.now();
+    const response = updateUserBy({ sessionExpires }, { id });
+    logger.info(`${dbUser.email} logout`);
+    return res.status(200).send(response);
   } catch (error) {
     logger.error(error);
     next(error);
