@@ -4,7 +4,7 @@ const { createUser, findUserBy, getAllUsers, updateUserBy } = require('../servic
 const logger = require('../logger');
 const { createToken } = require('../helpers/jwt');
 const { CREDENTIALS_ERROR, TOKEN_ERROR } = require('../constants/errors');
-const { ROLES, MAILER_OPTIONS } = require('../constants/params');
+const { ROLES, MAILER_WELCOME } = require('../constants/params');
 const { sendMail } = require('../helpers/mailer');
 
 exports.signUp = async (req, res, next) => {
@@ -14,7 +14,7 @@ exports.signUp = async (req, res, next) => {
     const user = await createUser({ ...body, password: hashedPassword });
     logger.info(`User ${user.name} created`);
     res.status(201).send(user);
-    sendMail({ ...MAILER_OPTIONS, to: user.email });
+    sendMail({ ...MAILER_WELCOME, to: user.email });
   } catch (error) {
     logger.error(error);
     next(error);
@@ -35,7 +35,7 @@ exports.signUpAdmin = async (req, res, next) => {
     const user = await createUser(userInfo);
     logger.info(`User ${user.name} created`);
     res.status(201).send(user);
-    sendMail({ ...MAILER_OPTIONS, to: user.email });
+    sendMail({ ...MAILER_WELCOME, to: user.email });
   } catch (error) {
     logger.error(error);
     next(error);
