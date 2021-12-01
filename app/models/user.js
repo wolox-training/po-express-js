@@ -49,16 +49,20 @@ module.exports = (sequelize, DataTypes) => {
       score: {
         type: DataTypes.INTEGER,
         defaultValue: 0
+      },
+      sessionExpires: {
+        type: DataTypes.DATE
       }
     },
     {
       timestamps: false,
-      tableName: 'users'
+      tableName: 'users',
+      underscored: true
     }
   );
 
   User.beforeUpdate(user => {
-   user.position = getPositionByScore(user.score)
+    user.position = getPositionByScore(user.score)
   });
 
   User.associate = models => {

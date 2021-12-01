@@ -5,6 +5,10 @@ const { AUTHENTICATION_ERROR } = require('../app/errors');
 const { createUserSession } = require('./utils/user');
 const { ROLES } = require('../app/constants/params');
 const { createUser } = require('./factory/user');
+const nodemailer = require('nodemailer');
+jest.mock('nodemailer');
+const sendMailMock = jest.fn();
+nodemailer.createTransport.mockReturnValue({ 'sendMail': sendMailMock });
 
 describe('POST /admin/users', () => {
 
@@ -29,7 +33,7 @@ describe('POST /admin/users', () => {
     expect(resp.statusCode).toBe(200);
   });
 
-  test('It should create the user and respond 201 ', async () => {
+  test('It should create the user respond 201 and send email', async () => {
     const { body: { token } } = await createUserSession({ email: credentialsMock.email, role: ROLES.ADMIN });
     const resp = await request(app)
       .post('/admin/users')
@@ -37,5 +41,6 @@ describe('POST /admin/users', () => {
       .send({ ...userMock, email: 'newEmail2@wolox.co' });
     expect(resp.body).toBeDefined();
     expect(resp.statusCode).toBe(201);
+    expect(sendMailMock).toHaveBeenCalled();
   });
 });
