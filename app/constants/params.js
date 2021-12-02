@@ -14,7 +14,11 @@ exports.USER_POSITIONS = {
   HEAD: 'HEAD',
   CEO: 'CEO'
 };
-exports.MAILER_OPTIONS = {
+exports.MAILER_WELCOME = {
   subject: 'Welcome to WeetApp',
   text: 'Successful registration'
+};
+exports.MAILER_BEST_WEETER = {
+  subject: 'Congratulations',
+  text: 'You are the tweeter of the day.'
 };

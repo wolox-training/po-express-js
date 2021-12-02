@@ -6,6 +6,7 @@ const logger = require('../logger');
 const { WEET_API_ERROR } = require('../constants/errors');
 const { PASSWORD_PARAM, USERID_PARAM } = require('../constants/params');
 const { User } = require('../models');
+const sequelize = require('sequelize');
 
 exports.getWeetContent = async () => {
   try {
@@ -21,6 +22,28 @@ exports.createWeet = async weet => {
   try {
     const weetInfo = await Weet.create(weet);
     return weetInfo;
+  } catch (error) {
+    logger.error(error);
+    throw databaseError(error);
+  }
+};
+
+exports.countWeets = async createdAt => {
+  try {
+    const Op = sequelize.Op;
+    const weets = await Weet.findOne({
+      group: ['user.id'],
+      attributes: [[sequelize.fn('COUNT', 'Weet.user_id'), 'weetsNumber']],
+      where: {
+        createdAt: {
+          [Op.gt]: createdAt
+        }
+      },
+      order: [[sequelize.fn('COUNT', 'weetsNumber'), 'DESC']],
+      include: [{ model: User, as: 'user' }],
+      raw: true
+    });
+    return weets;
   } catch (error) {
     logger.error(error);
     throw databaseError(error);

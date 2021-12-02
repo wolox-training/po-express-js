@@ -5,6 +5,7 @@ const { createUserSession } = require('./utils/user');
 const axios = require('axios');
 const { WEET_API_ERROR } = require('../app/constants/errors');
 const { validResponseMock } = require('./mocks/weet');
+const { countWeets } = require('../app/services/weet');
 jest.mock('axios');
 
 describe('POST /weets', () => {
@@ -16,6 +17,16 @@ describe('POST /weets', () => {
       .set('Authorization', token);
     expect(resp.body).toBeDefined();
     expect(resp.statusCode).toBe(201);
+  });
+
+  test('It should return an user with weetsNumber = 2', async () => {
+    axios.get.mockImplementation(() => Promise.resolve(validResponseMock));
+    const { body: { token } } = await createUserSession();
+    const TODAY = new Date().setHours(0, 0, 0, 0);
+    await request(app).post('/weets').set('Authorization', token);
+    await request(app).post('/weets').set('Authorization', token);
+    const user = await countWeets(TODAY);
+    expect(user.weetsNumber).toBe('2');
   });
 
   test('It should return an error witn status 503', async () => {
